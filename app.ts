@@ -14,11 +14,11 @@ const needSystemSetup = Deno.env.get("NEED_SYSTEM_SETUP") === "true" ||
     config().NEED_SYSTEM_SETUP === "true" || false;
 
 
-app.use(oakCors(
-    {
-        origin: /^.+localhost:(3000|4200|8080)$/
-    }
-))
+// app.use(oakCors(
+//     {
+//         origin: /^.+localhost:(3000|4200|8080)$/
+//     }
+// ))
 
 
 app.use(router.routes());
