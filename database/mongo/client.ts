@@ -2,7 +2,7 @@ import { config } from "dotenv"
 import { MongoClient } from "mongo"
 
 
-const uri = config().MONGODB_URI
+const uri = Deno.env.get("MONGODB_URI") || config().MONGODB_URI
 const mongoClient = new MongoClient()
 
 

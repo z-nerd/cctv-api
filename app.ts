@@ -9,7 +9,9 @@ import { Init } from "./system/index.ts";
 
 
 const app = new Application();
-const PORT = Number(config().PORT) || 8080;
+const PORT = Number(Deno.env.get("PORT")) || Number(config().PORT) || 80;
+const needSystemSetup = Deno.env.get("NEED_SYSTEM_SETUP") === "true" ||
+    config().NEED_SYSTEM_SETUP === "true" || false;
 
 
 app.use(oakCors(
@@ -28,7 +30,7 @@ app.addEventListener("listen", ({ secure, hostname, port }) => {
     const url = `${protocol}${hostname ?? "localhost"}:${port}`
 
     
-    if(config().NEED_SYSTEM_SETUP === "true") {
+    if(needSystemSetup) {
         Init()
     }
 
