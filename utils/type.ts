@@ -1,0 +1,1 @@
+export type TRequireOne<T> = T & { [P in keyof T]: Required<Pick<T, P>> }[keyof T]
