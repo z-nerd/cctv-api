@@ -22,7 +22,6 @@ export const createProduct = async ({ request, response }: RouterContext<any>) =
     const createdDate = new Date().toISOString()
 
     const _id = await Products.create({
-        _id: new ObjectId,
         name,
         description,
         price,
@@ -37,7 +36,7 @@ export const createProduct = async ({ request, response }: RouterContext<any>) =
 }
 
 
-export const getProducts = async ({ response, state }: RouterContext<any>) => {
+export const getProducts = async ({response, state}: RouterContext<any>) => {
     const allProducts = await Products.findAll({})
 
     response.status = 200

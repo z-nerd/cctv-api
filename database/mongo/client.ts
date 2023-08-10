@@ -15,52 +15,37 @@ const username = envVariable<string>('MONGO_USERNAME')
 const password = envVariable<string>('MONGO_PASSWORD')
 const db = envVariable<string>('MONGO_DBNAME')
 const tls = envVariable<boolean>('MONGO_TLS', 'boolean')
-const mongoClient = new MongoClient(mongoUri)
+const mongoClient = new MongoClient()
 
 
 try {
-    await mongoClient.connect()
+    if (mongoUri)
+        await mongoClient.connect(mongoUri)
+    else
+        await mongoClient.connect({
+            db,
+            tls,
+            servers: [
+                { host: hostP, port: portP},
+                { host: hostS1, port: portS1},
+                { host: hostS2, port: portS2}
+            ],
+            credential: {
+                username,
+                password,
+                db,
+                mechanism: 'SCRAM-SHA-1',
+            }
+        })
     console.log("Database connected!")
 } catch (error) {
     console.log(`Can't connect to mongodb Atlas from: 
     Local IP: ${await getNetworkAddr()}
     Public IP: ${await getIP({ipv6: true})}
-    Error name: ${error.name}
-    Error message: ${error.message}
-    Error: ${error}
-    `)
+    `);
+
+    console.log(`Faild to connect to database: ${error}`)
 }
-
-
-
-// try {
-//     if (mongoUri)
-//         await mongoClient.connect(mongoUri)
-//     else
-//         await mongoClient.connect({
-//             db,
-//             tls,
-//             servers: [
-//                 { host: hostP, port: portP},
-//                 { host: hostS1, port: portS1},
-//                 { host: hostS2, port: portS2}
-//             ],
-//             credential: {
-//                 username,
-//                 password,
-//                 db,
-//                 mechanism: 'SCRAM-SHA-1',
-//             }
-//         })
-//     console.log("Database connected!")
-// } catch (error) {
-//     console.log(`Can't connect to mongodb Atlas from: 
-//     Local IP: ${await getNetworkAddr()}
-//     Public IP: ${await getIP({ipv6: true})}
-//     `);
-
-//     console.log(`Faild to connect to database: ${error}`)
-// }
 
 
 export default mongoClient

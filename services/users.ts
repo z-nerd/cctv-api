@@ -5,7 +5,6 @@ import { IUser } from "../types/user.ts"
 import { accessSecret, refreshSecret } from "../utils/apiKey.ts"
 import { Crud } from "../database/mongo/crud.ts"
 import mongoClient from "../database/mongo/client.ts"
-import { ObjectId } from "mongo"
 
 
 const db = "cctv"
@@ -67,14 +66,13 @@ export const signup = async ({ request, response }: RouterContext<any>) => {
   const role = "user"
 
   const _id = await Users.create({
-    _id: new ObjectId,
     fullname,
     birthday,
     email,
     username,
     password: hashedPassword,
     role,
-})
+  })
   response.status = 201
   response.body = { message: "User created", userId: _id, username, role }
 }

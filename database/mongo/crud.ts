@@ -1,16 +1,16 @@
 import {
     AggregateOptions,
     Collection,
+    CreateIndexOptions,
     DeleteOptions,
     Document,
     Filter,
     FindOptions,
-    InsertOneOptions,
+    InsertDocument,
+    InsertOptions,
     MongoClient,
-    InsertOneModel,
-    UpdateFilter,
-    UpdateOptions,
-OptionalUnlessRequiredId,
+UpdateFilter,
+UpdateOptions,
 } from "mongo"
 import { TRequireOne } from "../../utils/type.ts"
 
@@ -21,13 +21,13 @@ export class Crud<T extends Document>{
     constructor(client: MongoClient,
         dbName: string,
         colName: string) {
-        this.collection = client.db(dbName).collection<T>(colName)
+        this.collection = client.database(dbName).collection<T>(colName)
     }
 
 
     create = async (
-        document: OptionalUnlessRequiredId<T>,
-        options?: InsertOneOptions|undefined,
+        document: InsertDocument<T>,
+        options?: InsertOptions,
     ) => {
         return await this.collection.insertOne(document, options)
     }
@@ -99,11 +99,11 @@ export class Crud<T extends Document>{
     }
 
 
-    // createIndex = async (
-    //     // indexSpec: TRequireOne<Partial<{ [K in keyof T]: number }>>,
-    //     options: CreateIndexOptions,
-    // ) => {
-    //     return await this.collection.createIndexes(options)
-    //     // createIndex(indexSpec as IndexSpecification, options)
-    // }
+    createIndex = async (
+        // indexSpec: TRequireOne<Partial<{ [K in keyof T]: number }>>,
+        options: CreateIndexOptions,
+    ) => {
+        return await this.collection.createIndexes(options)
+        // createIndex(indexSpec as IndexSpecification, options)
+    }
 }
