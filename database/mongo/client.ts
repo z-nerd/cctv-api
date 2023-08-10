@@ -1,18 +1,16 @@
 import { MongoClient } from "mongo"
 import { envVariable } from "../../utils/env.ts"
+import { getNetworkAddr } from "local_ip"
+import { getIP } from "get_ip"
 
 
 const mongoUri = envVariable<string>('MONGO_URI', 'string', false)
-
 const hostP = envVariable<string>('MONGO_HOST_P')
 const portP = envVariable<number>('MONGO_PORT_P', 'number')
-
 const hostS1 = envVariable<string>('MONGO_HOST_S1')
 const portS1 = envVariable<number>('MONGO_PORT_S1', 'number')
-
 const hostS2 = envVariable<string>('MONGO_HOST_S2')
 const portS2 = envVariable<number>('MONGO_PORT_S2', 'number')
-
 const username = envVariable<string>('MONGO_USERNAME')
 const password = envVariable<string>('MONGO_PASSWORD')
 const db = envVariable<string>('MONGO_DBNAME')
@@ -41,6 +39,11 @@ try {
         })
     console.log("Database connected!")
 } catch (error) {
+    console.log(`Can't connect to mongodb Atlas from: 
+    Local IP: ${await getNetworkAddr()}
+    Public IP: ${await getIP({ipv6: true})}
+    `);
+
     console.log(`Faild to connect to database: ${error}`)
 }
 

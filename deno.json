@@ -7,6 +7,8 @@
         "djwt": "https://deno.land/x/djwt/mod.ts",
         "cors": "https://deno.land/x/cors/mod.ts",
         "faker": "https://deno.land/x/deno_faker/mod.ts",
+        "local_ip": "https://deno.land/x/local_ip/mod.ts",
+        "get_ip": "https://deno.land/x/get_ip/mod.ts",
         "$std/": "https://deno.land/std/"
     },
     "tasks": {
