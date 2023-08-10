@@ -37,7 +37,10 @@ export class Crud<T extends Document>{
         filter: Filter<T>,
         options?: FindOptions,
     ) => {
-        return await this.collection.findOne(filter, options)
+        return await this.collection.findOne(filter, {
+            noCursorTimeout: false,
+            ...options,
+        })
     }
 
 

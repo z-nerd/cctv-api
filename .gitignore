@@ -2,6 +2,8 @@
 *.pyc
 *.swp
 .env
+.env.local
+.env.product
 
 /.cargo_home/
 /.idea/
