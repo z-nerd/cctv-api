@@ -1,5 +1,4 @@
 #!/usr/bin/env -S deno run --allow-read --allow-net --watch
-import "./compile-resolve.ts"
 import router from "./routes.ts";
 import { Application } from "oak"
 import { oakCors } from "cors"

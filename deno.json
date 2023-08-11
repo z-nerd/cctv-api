@@ -3,7 +3,7 @@
         "oak": "https://deno.land/x/oak/mod.ts",
         "dotenv": "https://deno.land/x/dotenv/mod.ts",
         "mongo": "https://deno.land/x/mongo/mod.ts",
-        "bcrypt": "https://deno.land/x/bcrypt/mod.ts",
+        "scrypt": "https://deno.land/x/scrypt/mod.ts",
         "djwt": "https://deno.land/x/djwt/mod.ts",
         "cors": "https://deno.land/x/cors/mod.ts",
         "faker": "https://deno.land/x/deno_faker/mod.ts",

@@ -1,12 +1,14 @@
 import { RouterContext } from "oak"
-import { compare, genSalt, hash } from "bcrypt"
+import { hash, verify as compare, genSalt } from "scrypt"
 import { create, getNumericDate, verify } from "djwt"
 import { IUser } from "../types/user.ts"
 import { accessSecret, refreshSecret } from "../utils/apiKey.ts"
 import { Crud } from "../database/mongo/crud.ts"
 import mongoClient from "../database/mongo/client.ts"
+import { envVariable } from "../utils/env.ts"
 
 
+const domain = envVariable<string>("DOMAIN")
 const db = "cctv"
 const col = "users"
 const Users = new Crud<IUser>(mongoClient, db, col)
@@ -24,7 +26,7 @@ export const signin = async ({ request, response }: RouterContext<any>) => {
     return
   }
 
-  const confirmPassword = await compare(password, user.password)
+  const confirmPassword = compare(password, user.password)
   if (!confirmPassword) {
     response.status = 404
     response.body = { message: `user "${username}" not found` }
@@ -61,8 +63,10 @@ export const signin = async ({ request, response }: RouterContext<any>) => {
 
 export const signup = async ({ request, response }: RouterContext<any>) => {
   const { fullname, birthday, email, username, password } = await request.body().value
-  const salt = await genSalt(8)
-  const hashedPassword = await hash(password, salt)
+  const salt = genSalt(8)
+  const hashedPassword = hash(password, {
+    salt,
+  })
   const role = "user"
 
   const _id = await Users.create({
@@ -146,7 +150,7 @@ export const refresh = async (
       token: jwt,
     }
     cookies.set("token", jwt, {
-      domain: "localhost",
+      domain,
       overwrite: true,
       // expires: new Date(new Date().getTime() + 5000)
     })
