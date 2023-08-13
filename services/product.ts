@@ -3,6 +3,7 @@ import { IProduct } from "../types/product.ts"
 import { RouterContext } from "oak"
 import mongoClient from "../database/mongo/client.ts"
 import { Crud } from "../database/mongo/crud.ts"
+import { parseBody } from "../utils/body.ts"
 // import { faker } from "faker"
 
 
@@ -18,7 +19,7 @@ export const createProduct = async ({ request, response }: RouterContext<any>) =
         price,
         imgAlt,
         imgSrc,
-    } = await request.body().value
+    } = await parseBody(request)
     const createdDate = new Date().toISOString()
 
     const _id = await Products.create({
@@ -90,7 +91,7 @@ export const updateProductById = async ({
         price,
         imgAlt,
         imgSrc
-    } = await request.body().value
+    } = await parseBody(request)
 
 
     const product = await Products.update({ _id: new ObjectId(id) },

@@ -6,6 +6,7 @@ import { accessSecret, refreshSecret } from "../utils/apiKey.ts"
 import { Crud } from "../database/mongo/crud.ts"
 import mongoClient from "../database/mongo/client.ts"
 import { envVariable } from "../utils/env.ts"
+import { parseBody } from "../utils/body.ts"
 
 
 const domain = envVariable<string>("DOMAIN")
@@ -15,8 +16,7 @@ const Users = new Crud<IUser>(mongoClient, db, col)
 
 
 export const signin = async ({ request, response }: RouterContext<any>) => {
-  const body = await request.body()
-  const { username, password } = await body.value
+  const { username, password } = await parseBody(request)
 
   const user = await Users.find({ username })
 
@@ -62,7 +62,7 @@ export const signin = async ({ request, response }: RouterContext<any>) => {
 
 
 export const signup = async ({ request, response }: RouterContext<any>) => {
-  const { fullname, birthday, email, username, password } = await request.body().value
+  const { fullname, birthday, email, username, password } = await parseBody(request)
   const salt = genSalt(8)
   const hashedPassword = hash(password, {
     salt,
