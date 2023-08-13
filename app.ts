@@ -15,7 +15,7 @@ const needSystemSetup = envVariable<boolean>("NEED_SYSTEM_SETUP", 'boolean')
 const app = new Application()
 app.use(oakCors(
     {
-        origin: domain
+        origin: "*"
     }
 ))
 
