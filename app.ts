@@ -13,13 +13,8 @@ const needSystemSetup = envVariable<boolean>("NEED_SYSTEM_SETUP", 'boolean')
 
 
 const app = new Application()
-app.use(oakCors(
-    {
-        origin: "*"
-    }
-))
 
-
+app.use(oakCors())
 app.use(router.routes());
 app.use(router.allowedMethods());
 
