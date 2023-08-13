@@ -14,8 +14,8 @@ export enum Permission {
 
 const Roles = {
     admin: [Permission.Create, Permission.Read, Permission.Update, Permission.Delete],
-    user: [Permission.Create, Permission.Read, Permission.Update, Permission.Delete],
-    anonymous: []
+    user: [Permission.Read],
+    anonymous: [Permission.Read]
 }
 
 
