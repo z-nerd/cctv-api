@@ -12,11 +12,11 @@ const needSystemSetup = envVariable<boolean>("NEED_SYSTEM_SETUP", 'boolean')
 
 
 const app = new Application()
-// app.use(oakCors(
-//     {
-//         origin: /^.+localhost:(3000|4200|8080)$/
-//     }
-// ))
+app.use(oakCors(
+    {
+        origin: /^.+localhost:(3000|4200|8080)$/
+    }
+))
 
 
 app.use(router.routes());
