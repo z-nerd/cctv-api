@@ -8,13 +8,14 @@ import { envVariable } from "./utils/env.ts";
 
 
 const PORT = envVariable<number>("PORT", 'number')
+const domain = envVariable<string>("DOMAIN")
 const needSystemSetup = envVariable<boolean>("NEED_SYSTEM_SETUP", 'boolean')
 
 
 const app = new Application()
 app.use(oakCors(
     {
-        origin: /^.+localhost:(3000|4200|8080)$/
+        origin: domain
     }
 ))
 
