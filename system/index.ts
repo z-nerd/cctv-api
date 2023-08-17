@@ -8,6 +8,7 @@ export const Init = async () => {
     const col = "system"
     const System = new Crud<ISystem>(mongoClient, db, col)
 
+    // NotSupported in Deno Deploy 
     // await Deno.mkdir(Deno.cwd() + "/uploads/product-imge", { recursive: true })
 
 

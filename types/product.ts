@@ -12,7 +12,11 @@ export interface IProduct{
     lastModifiedDate: string
 }
 
+
 export interface IProductImage{
     _id: ObjectId
-    base64: string
+    src: string
+    alt: string
+    createdDate: string
+    lastModifiedDate: string
 }
