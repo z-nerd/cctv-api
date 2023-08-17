@@ -6,8 +6,7 @@ export interface IProduct{
     name: string
     price: string
     description: string
-    imgSrc: string
-    imgAlt: string
+    productImageId: string
     createdDate: string
     lastModifiedDate: string
 }

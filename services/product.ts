@@ -4,8 +4,7 @@ import { RouterContext } from "oak"
 import mongoClient from "../database/mongo/client.ts"
 import { Crud } from "../database/mongo/crud.ts"
 import { parseBody } from "../utils/body.ts"
-import { send } from "https://deno.land/x/oak@v12.6.0/send.ts"
-import { decode, encode } from "$std/encoding/base64.ts"
+import { decode } from "$std/encoding/base64.ts"
 // import { faker } from "faker"
 
 
@@ -20,8 +19,7 @@ export const createProduct = async ({ request, response }: RouterContext<any>) =
         name,
         description,
         price,
-        imgAlt,
-        imgSrc,
+        productImageId,
     } = await parseBody(request)
     const createdDate = new Date().toISOString()
 
@@ -29,8 +27,7 @@ export const createProduct = async ({ request, response }: RouterContext<any>) =
         name,
         description,
         price,
-        imgAlt,
-        imgSrc,
+        productImageId,
         createdDate,
         lastModifiedDate: createdDate,
     })
@@ -89,6 +86,13 @@ export const getProductImage = async ({ params, response }: RouterContext<any,{ 
     response.headers.set('alt', alt)
     response.headers.set('createdDate', createdDate)
     response.body = decode(image.slice(commaIdx + 1)).buffer
+}
+
+export const getProductImagesMeta = async ({ response, state }: RouterContext<any>) => {
+    const allProducts = await ProductImages.findAll({})
+
+    response.status = 200
+    response.body = allProducts
 }
 
 
@@ -215,8 +219,7 @@ export const updateProductById = async ({
         name,
         description,
         price,
-        imgAlt,
-        imgSrc
+        productImageId,
     } = await parseBody(request)
 
 
@@ -226,8 +229,7 @@ export const updateProductById = async ({
                 name,
                 description,
                 price,
-                imgAlt,
-                imgSrc,
+                productImageId,
                 lastModifiedDate: new Date().toISOString()
             }
         })
