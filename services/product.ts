@@ -1,5 +1,5 @@
 import { ObjectId } from "mongo"
-import { IProduct } from "../types/product.ts"
+import { IProduct, IProductImage } from "../types/product.ts"
 import { RouterContext } from "oak"
 import mongoClient from "../database/mongo/client.ts"
 import { Crud } from "../database/mongo/crud.ts"
@@ -11,6 +11,7 @@ import { send } from "https://deno.land/x/oak@v12.6.0/send.ts"
 const db = "cctv"
 const col = "products"
 const Products = new Crud<IProduct>(mongoClient, db, col)
+const ProductImages = new Crud<IProductImage>(mongoClient, db, "product-images")
 
 
 export const createProduct = async ({ request, response }: RouterContext<any>) => {
@@ -41,7 +42,7 @@ export const createProduct = async ({ request, response }: RouterContext<any>) =
 export const uploadProductImage = async (ctx: RouterContext<any>) => {
     const body = ctx.request.body()
     const length = Number(ctx.request.headers.get("content-length")) || 1
-    const uploadDir = Deno.cwd() + "/uploads/product-imge"
+    // const uploadDir = Deno.cwd() + "/uploads/product-imge"
 
     if (length > 5000000) {
         ctx.response.status = 400
@@ -68,8 +69,8 @@ export const uploadProductImage = async (ctx: RouterContext<any>) => {
                 if (file.filename) {
                     const fileData = await Deno.readFile(file.filename)
                     const fileName = file.filename.split('/').pop()
-                    const filePath = uploadDir + "/" + fileName
-                    await Deno.writeFile(filePath, fileData)
+                    // const filePath = uploadDir + "/" + fileName
+                    // await Deno.writeFile(filePath, fileData)
 
                     ctx.response.status = 201
                     ctx.response.body = { imgId: fileName }

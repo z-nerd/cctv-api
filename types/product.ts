@@ -11,3 +11,8 @@ export interface IProduct{
     createdDate: string
     lastModifiedDate: string
 }
+
+export interface IProductImage{
+    _id: ObjectId
+    base64: string
+}
