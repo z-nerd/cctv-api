@@ -5,17 +5,25 @@ import { accessSecret } from "../utils/apiKey.ts"
 
 
 export enum Permission {
+    Upload = "upload",
     Create = "create",
     Read = "read",
+    ReadFile = "read-file",
     Update = "update",
     Delete = "delete",
 }
 
 
 const Roles = {
-    admin: [Permission.Create, Permission.Read, Permission.Update, Permission.Delete],
-    user: [Permission.Read],
-    anonymous: [Permission.Read]
+    admin: [
+        Permission.Upload, 
+        Permission.Create, 
+        Permission.Read, 
+        Permission.ReadFile, 
+        Permission.Update, 
+        Permission.Delete],
+    user: [Permission.Read, Permission.ReadFile],
+    anonymous: [Permission.Read, Permission.ReadFile]
 }
 
 

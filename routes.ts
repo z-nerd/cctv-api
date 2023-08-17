@@ -5,7 +5,9 @@ import {
       deleteProductById,
       getProductById,
       getProducts,
-      updateProductById
+      updateProductById,
+      uploadProductImage,
+      getProductImage,
 } from "./services/product.ts";
 import { Permission, isAuthourized } from "./middlewares/authorized.ts";
 
@@ -20,6 +22,8 @@ router.post("/api/signup", signup)
 
 //Product
 router.post("/api/products", isAuthourized(Permission.Create), createProduct)
+      .post("/api/product-image", isAuthourized(Permission.Upload), uploadProductImage)
+      .get("/api/product-image/:imgId", isAuthourized(Permission.ReadFile), getProductImage)
       .get("/api/products", isAuthourized(Permission.Read), getProducts)
       .get("/api/products/:id", isAuthourized(Permission.Read), getProductById)
       .patch("/api/products/:id", isAuthourized(Permission.Update), updateProductById)

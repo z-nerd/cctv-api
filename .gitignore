@@ -5,6 +5,7 @@
 .env.local
 .env.product
 .dev.info
+uploads/product-imge/**
 
 /.cargo_home/
 /.idea/
