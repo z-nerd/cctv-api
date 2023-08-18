@@ -19,7 +19,7 @@ export const createProduct = async ({ request, response }: RouterContext<any>) =
         name,
         description,
         price,
-        productImageId,
+        productImage,
     } = await parseBody(request)
     const createdDate = new Date().toISOString()
 
@@ -27,7 +27,7 @@ export const createProduct = async ({ request, response }: RouterContext<any>) =
         name,
         description,
         price,
-        productImageId,
+        productImage,
         createdDate,
         lastModifiedDate: createdDate,
     })
@@ -60,7 +60,7 @@ export const uploadProductImage = async ({ request, response }: RouterContext<an
     })
 
     response.status = 201
-    response.body = { id: _id }
+    response.body = { id: _id, alt }
 }
 
 
@@ -219,7 +219,7 @@ export const updateProductById = async ({
         name,
         description,
         price,
-        productImageId,
+        productImage,
     } = await parseBody(request)
 
 
@@ -229,7 +229,7 @@ export const updateProductById = async ({
                 name,
                 description,
                 price,
-                productImageId,
+                productImage,
                 lastModifiedDate: new Date().toISOString()
             }
         })
